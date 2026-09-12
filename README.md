@@ -1,64 +1,31 @@
-\# Supply Chain Inventory Analysis (SKU-level)
+# 供应链库存分析 + BI 补货看板
 
+本项目包含两部分：
 
+1. **库存数据分析**（Python + SQL）：库存周转、缺货、滞销识别与资金占用量化
+2. **BI 补货看板**（Power BI）：交互式看板，含 KPI 概览、补货计划、滞销明细三页
 
-An independent data analysis project: analyzing 80 SKUs over 90 days of
+**详细分析报告：** [README_BL.md](./README_BL.md)
 
-orders and inventory to identify slow-moving stock and stock-out risks.
+## 核心结论
 
+- 全仓平均库存周转 **21 天**，平均占压资金 **73.97 万元**
+- 识别 **15 个滞销 SKU**，合计占压资金 **127,885 元**
+- **母婴品类占压资金的 59%**（8 个 SKU），三个独立角度交叉验证
 
+## 技术栈
 
-\## Tools
+- Python（pandas / numpy）：SQL 查询、指标计算、需求预测
+- SQL（DuckDB）：聚合、窗口函数、多表关联
+- Power BI：Power Query、星型数据模型、DAX 度量值、交互式看板
 
-\- Python (pandas, matplotlib)
+## 文件说明
 
-\- SQL (DuckDB) — window functions, aggregation, joins
-
-\- CSV data pipeline
-
-
-
-\## Data
-
-\- `products.csv` — 80 SKUs, category, unit cost/price, lead time
-
-\- `orders.csv` — \~5,600 order rows over 90 days
-
-\- `inventory.csv` — 7,200 daily stock snapshots
-
-
-
-\## Metrics Calculated
-
-\- Inventory turnover days (DIO) = avg stock / daily sales (90-day \& 30-day window)
-
-\- Zero-stock days (last 7 days)
-
-\- Slow-moving flag (no sales in last 60 days)
-
-\- Frozen capital = avg stock x unit cost
-
-
-
-\## Key Findings
-
-\- Identified 15 slow-moving SKUs, freezing \~127,881 CNY in capital
-
-\- Top frozen SKU: SKU0040 (\~13.7k CNY)
-
-\- 3 high stock-out risk SKUs (high sales but 2-3 zero-stock days in 7 days)
-
-\- Largest frozen capital by category: Baby
-
-
-
-\## Recommendations
-
-\- Clearance priority ranking for slow-moving SKUs
-
-\- Raise safety stock for fast-moving but frequently out-of-stock SKUs
-
-
-
-\## How to Run
-
+| 文件 | 说明 |
+|---|---|
+| `库存分析看板.pbix` | Power BI 源文件 |
+| `forecast.py` | 需求预测与安全库存计算 |
+| `analyze.py` / `analyze2.py` | 库存指标与滞销分析 |
+| `viz.py` | 可视化图表生成 |
+| `charts/` | 输出图表 |
+| `data/` | 原始数据与计算结果 |
